@@ -1,4 +1,5 @@
-function Port(newPort) {
-  this.newPort = newPort;
+function Port(PortName) {
+  this.PortName = PortName;
 }
+
 module.exports = Port;
