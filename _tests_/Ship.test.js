@@ -5,13 +5,14 @@ describe("Ship", () => {
     expect(new Ship()).toBeInstanceOf(Object);
   });
 
-  it("Starting Port", () => {
-    const ship = new Ship("Southampton");
-    expect(ship.startingPort).toBe("Southampton");
+  it("has a starting Port", () => {
+    const ship = new Ship("Dover");
+
+    expect(ship.startingPort).toBe("Dover");
   });
 
   it("Can set Sail", () => {
-    const ship = new Ship("Southampton");
+    const ship = new Ship("Dover");
 
     ship.setSail();
 
