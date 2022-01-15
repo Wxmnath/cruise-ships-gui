@@ -5,10 +5,17 @@ function Ship(itinerary) {
   this.previousPort = null;
 
   this.setSail = function () {
+    const itinerary = this.itinerary;
+    const currentPortIndex = itinerary.ports.indexOf(this.currentPort);
+
+    if (currentPortIndex === itinerary.ports.length - 1) {
+      throw new Error("End of itinerary reached");
+    }
+
     this.previousPort = this.currentPort;
-    /* this.startingPort property now renamed with this.currentPort to allow ship to be at different ports */
     this.currentPort = "";
   };
+
   this.dock = function (port) {
     //expect dock method to pick the next ort on an Itinerary.
     const itinerary = this.itinerary;
