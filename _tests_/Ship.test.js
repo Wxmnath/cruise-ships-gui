@@ -37,6 +37,7 @@ describe("Ship", () => {
     /* this.startingPort property now renamed with this.currentPort
     to allow ship to be at different ports */
     expect(ship.currentPort).toBeFalsy();
+    expect(dover.ships).not.toContain(ship); //Here we expect the Ship's setSail method to call it's currentPort's removeShip method, and we can assert on this by checking dover.ships no longer has our Ship inside.
   });
 
   it("Can dock at a different port", () => {
@@ -52,6 +53,7 @@ describe("Ship", () => {
     ship.dock();
 
     expect(ship.currentPort).toBe(calais); //expect the ship's currentPort to be calais.
+    expect(calais.ships).toContain(ship);
   });
 
   it("cannot sail further than its itinerary", () => {
@@ -65,4 +67,17 @@ describe("Ship", () => {
 
     expect(() => ship.setSail()).toThrowError("End of itinerary reached"); //Then ship.setSail gets invoked and throws an error before the test has chance to assert it. Therefore, with the toThrowError matcher you always pass in a callback function so that Jest can decide when to call it.
   });
+
+  it("gets added to port on instantiation", () => {
+    const dover = new Port("Dover");
+    const itinerary = new Itinerary([dover]);
+    const ship = new Ship(itinerary);
+
+    expect(dover.ships).toContain(ship);
+  });
+  /* Here we create a Port, which gets passed to an Itinerary 
+  that gets passed to Ship. We expect that the Port instance 
+  that eventually ends up being made available to the Ship after 
+  this flow, will have it's addShip method called, and thus port.ships
+   will contain our Ship instance. */
 });
