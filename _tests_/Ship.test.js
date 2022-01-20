@@ -4,14 +4,28 @@ const Itinerary = require("../src/Itinerary.js");
 
 describe("Ship", () => {
   describe("with ports and an itinerary", () => {
-    let ship;
+    //let ship;
     let dover;
     let calais;
-    let itinerary;
+    //let itinerary;
 
     beforeEach(() => {
-      dover = new Port("Dover");
-      calais = new Port("Calais");
+      dover = {
+        addShip: jest.fn(),
+        removeShip: jest.fn(),
+        name: "Dover",
+        ships: [],
+      };
+
+      calais = {
+        addShip: jest.fn(),
+        removeShip: jest.fn(),
+        name: "Calais",
+        ships: [],
+      };
+
+      //dover = new Port("Dover");
+      //calais = new Port("Calais");
       itinerary = new Itinerary([dover, calais]);
       ship = new Ship(itinerary);
     });
@@ -27,7 +41,7 @@ describe("Ship", () => {
       ship.setSail();
 
       expect(ship.currentPort).toBeFalsy();
-      expect(dover.ships).not.toContain(ship); //Here we expect the Ship's setSail method to call it's currentPort's remove Ship method, and we can assert on this by checking dover.ships no longer has our Ship inside.
+      expect(dover.removeShip).toHaveBeenCalledWith(ship); //Instead of asserting on port.ships, we'll assert that our Ship instance's setSail method calls the removeShip method on our Port-like stub. Because we've tested removeShip separately inside Port.test.js, we can have complete confidence that despite test isolation, our application will have full test coverage.
     });
 
     it("Can dock at a different port", () => {
@@ -35,7 +49,7 @@ describe("Ship", () => {
       ship.dock();
 
       expect(ship.currentPort).toBe(calais); //expect the ship's currentPort to be calais.
-      expect(calais.ships).toContain(ship);
+      expect(calais.addShip).toHaveBeenCalledWith(ship);
     });
 
     it("cannot sail further than its itinerary", () => {
@@ -46,7 +60,7 @@ describe("Ship", () => {
     });
 
     it("gets added to port on instantiation", () => {
-      expect(dover.ships).toContain(ship);
+      expect(dover.addShip).toHaveBeenCalledWith(ship); //Our Ship constructor calls a port's addShip method in its constructor, so our Port-like stub's addShip method gets called in the beforeEach callback prior to each test running. Therefore, we just have to assert in this test that addShip was called.
     });
   });
 });
