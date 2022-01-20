@@ -7,7 +7,7 @@ describe("Ship", () => {
     //let ship;
     let dover;
     let calais;
-    //let itinerary;
+    let itinerary;
 
     beforeEach(() => {
       dover = {
@@ -24,9 +24,13 @@ describe("Ship", () => {
         ships: [],
       };
 
+      itinerary = {
+        ports: [dover, calais],
+      };
       //dover = new Port("Dover");
       //calais = new Port("Calais");
-      itinerary = new Itinerary([dover, calais]);
+      //itinerary = new Itinerary([dover, calais]);
+
       ship = new Ship(itinerary);
     });
     it("can be instantiated", () => {
