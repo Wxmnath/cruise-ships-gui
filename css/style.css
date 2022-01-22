@@ -1,0 +1,32 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#viewport {
+  width: 640px;
+  height: 256px;
+  position: relative;
+  overflow-x: auto;
+  background-image: url("./images/water0.png");
+}
+
+#ports {
+  margin-top: 96px;
+  display: flex;
+  justify-content: space-around; /* will give equal spacing around each of the elements children */
+}
+
+#ports > .port {
+  /* #ports > .port means select all elements with a class of port which are a direct child of an element with an id of ports */
+  width: 64px;
+  height: 32px;
+  background-image: url("./images/port.png");
+}
