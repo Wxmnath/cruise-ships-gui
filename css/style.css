@@ -15,7 +15,7 @@ body {
   height: 256px;
   position: relative;
   overflow-x: auto;
-  background-image: url("./images/water0.png");
+  background-image: url("../images/water0.png");
 }
 
 #ports {
@@ -28,5 +28,12 @@ body {
   /* #ports > .port means select all elements with a class of port which are a direct child of an element with an id of ports */
   width: 64px;
   height: 32px;
-  background-image: url("./images/port.png");
+  background-image: url("../images/port.png");
+}
+
+#ship {
+  width: 128px;
+  height: 64px;
+  background-image: url("../images/ship.png");
+  position: absolute; /* position: absolute will position the element relative to the nearest outer element with a position: relative rule (or the body if one doesn't exist). In this case, we have position: relative set on the #viewport element so our ship element positions itself relative to this. */
 }

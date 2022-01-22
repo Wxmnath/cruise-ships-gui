@@ -10,11 +10,14 @@
   </head>
   <body>
     <div id="viewport">
-      <div id="ports">
+      <div id="ports"></div>
+      <div id="ship"></div>
+      <!-- created a new div with id ship inside the #viewport div. -->
     </div>
     <script src="src/controller.js"></script>
     <script src="src/Port.js"></script>
     <script src="src/Itinerary.js"></script>
+    <script src="src/Ship.js"></script>
     <script>
       const controller = new Controller();
       const itinerary = new Itinerary([
@@ -23,7 +26,11 @@
         new Port("San Juan"),
         new Port("Amber Cove"),
       ]);
+      const ship = new Ship(
+        itinerary
+      ); /* created a new instance of ship inside inline JS passing in itinerary */
       controller.renderPorts(itinerary.ports);
+      controller.renderShips(ship);
     </script>
   </body>
 </html>

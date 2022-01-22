@@ -67,6 +67,34 @@
     });
   };
 
+  Controller.prototype.renderShips = function renderShips(ship) {
+    const shipPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
+    const portElement = document.querySelector(
+      `[data-port-index='${shipPortIndex}']`
+    );
+    /* ^This is where we start to go down through objects again. 
+    Remember that a Ship can have an Itinerary which can have Ports and 
+    that we can use dot notation in JavaScript to go down through this so 
+    ship.itinerary is the Itinerary object we passed in when we created our
+    ship. ship.itinerary.ports is the array of Ports we passed in when 
+    we created our itinerary. ship.currentPort will be inside of 
+    ship.itinerary.ports as a Ship object uses its itinerary.ports 
+    array to determine its currentPort, so we know that shipPortIndex 
+    will always be what we want it to be.
+    Next we use a data attribute selector inside of document.querySelector to 
+    find our port element. Read more about data attribute selectors here. 
+    We use template literals again to interpolate the port index. Remember
+    that the data-port-index attributes our port DOM elements all correspond 
+    to the same array of ports we query in our indexOf here, so again there 
+    will always be a corresponding value. */
+
+    const shipElement = document.querySelector("#ship");
+    shipElement.style.top = `${portElement.offsetTop}px`;
+    shipElement.style.left = `${portElement.offsetLeft}px`;
+    shipElement.style.top = `${portElement.offsetTop + 32}px`;
+    shipElement.style.left = `${portElement.offsetLeft + 32}px`;
+  };
+
   if (typeof module !== "undefined" && module.exports) {
     module.exports = Controller;
   } else {
