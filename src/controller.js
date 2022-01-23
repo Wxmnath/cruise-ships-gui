@@ -1,6 +1,11 @@
 (function exportController() {
-  function Controller() {
+  function Controller(ship) {
+    this.ship = ship;
     this.initialiseSea();
+
+    document.querySelector("#sailbutton").addEventListener("click", () => {
+      this.setSail();
+    });
   }
 
   Controller.prototype.initialiseSea = function initialiseSea() {
@@ -23,13 +28,13 @@
     div and assign it to a variable named portsElement. 
     Set portElement's width to 0px. */
     const portsElement = document.querySelector("#ports");
-    portsElement.style.width =
-      "0px"; /* We set a width of 0 as we want JS to manipulate the width of this container every time we add a child element.*/
+    portsElement.style.width = "0px";
+    /* We set a width of 0 as we want JS to manipulate the width of this container every time we add a child element.*/
 
     /* You should then iterate over the array passed to the ports 
     parameter using forEach and for each one should render a new div 
     to the DOM with the class port*/
-    ports.forEach((port, index) => {
+    this.ship.itinerary.ports.forEach((port, index) => {
       const newPortElement = document.createElement("div");
       newPortElement.className = "port";
       newPortElement.dataset.portName = port.name;
@@ -67,8 +72,10 @@
     });
   };
 
-  Controller.prototype.renderShips = function renderShips(ship) {
-    const shipPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
+  Controller.prototype.renderShips = function renderShips() {
+    const shipPortIndex = this.ship.itinerary.ports.indexOf(
+      this.ship.currentPort
+    );
     const portElement = document.querySelector(
       `[data-port-index='${shipPortIndex}']`
     );
@@ -89,10 +96,55 @@
     will always be a corresponding value. */
 
     const shipElement = document.querySelector("#ship");
-    shipElement.style.top = `${portElement.offsetTop}px`;
-    shipElement.style.left = `${portElement.offsetLeft}px`;
+    //shipElement.style.top = `${portElement.offsetTop}px`;
+    //shipElement.style.left = `${portElement.offsetLeft}px`;
     shipElement.style.top = `${portElement.offsetTop + 32}px`;
     shipElement.style.left = `${portElement.offsetLeft + 32}px`;
+  };
+
+  Controller.prototype.renderShips = function renderMessage(message) {
+    const messageElement = document.createElement("div");
+    messageElement.id = "message";
+    messageElement.innerHTML = message;
+
+    const viewport = document.querySelector("#viewport");
+    viewport.appendChild(messageElement);
+    setTimeout(() => {
+      viewport.removeChild(messageElement);
+    }, 2000);
+  };
+
+  Controller.prototype.setSail = function setSail() {
+    const ship = this.ship;
+    const currentPortIndex = this.ship.itinerary.ports.indexOf(
+      ship.currentPort
+    );
+    const nextPortIndex = currentPortIndex + 1;
+    const nextPortElement = document.querySelector(
+      `[data-prt-index='${nextPortIndex}']`
+    );
+
+    if (!nextPortElement) {
+      return alert("End of the line!");
+    }
+
+    const shipElement = document.querySelector("#ship");
+    const shipLeft = parseInt(shipElement.style.left, 10);
+
+    ship.setSail();
+    const sailInterval = setInterval(() => {
+      if (shipLeft === nextPortElement.offsetLeft - 32) {
+        clearInterval(sailInterval);
+      }
+
+      shipElement.style.left = `${shipLeft + 1}px`;
+    }, 20);
+
+    ship.dock();
+
+    if (!nextPortElement) {
+      return alert("End of the line!");
+    }
   };
 
   if (typeof module !== "undefined" && module.exports) {

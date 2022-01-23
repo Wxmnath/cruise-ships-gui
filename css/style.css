@@ -37,3 +37,23 @@ body {
   background-image: url("../images/ship.png");
   position: absolute; /* position: absolute will position the element relative to the nearest outer element with a position: relative rule (or the body if one doesn't exist). In this case, we have position: relative set on the #viewport element so our ship element positions itself relative to this. */
 }
+
+#sailbutton {
+  border: 0;
+  background-color: #fb3640;
+  border-bottom: 4px solid #d8040f;
+  color: white;
+  font-family: inherit;
+  padding: 10px 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-family: "Pacifico", cursive;
+}
+
+#sailbutton:focus {
+  background-color: #d8040f;
+  border-bottom-width: 0;
+  padding-top: 14px;
+}

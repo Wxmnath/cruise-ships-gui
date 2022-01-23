@@ -22,7 +22,7 @@ module.exports = Port; */
       this.ships.push(ship);
     },
     removeShip(ship) {
-      this.ships = this.ships.filter((dockedShip) => dockedShip !== ship);
+      this.ships.pop(ship);
     },
   };
 
